@@ -34,7 +34,13 @@ jobs:
         run: npx wait-on http://localhost:3000
 
       - name: Run tests
+        env:
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+        
         run: npm run run-tests
+      
         
       - name: Save test results as artifacts
         uses: actions/upload-artifact@v4
