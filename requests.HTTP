@@ -1,0 +1,41 @@
+###
+
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username": "tester01",
+    "password": "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
+}
+
+###
+GET http://localhost:3000/api/clients
+Content-Type: application/json
+x-user-auth: {"username":"tester01","token":"d87f5fcbfba9edf122c8ca00100c9a3d"}
+
+###
+GET http://localhost:3000/api/rooms
+Content-Type: application/json
+x-user-auth: {"username":"tester01","token":"a293e465c6fc5b936b946aa40f565fd4"}
+
+###
+### Create a new room
+POST http://localhost:3000/api/room/new
+Content-Type: application/json
+x-user-auth: {"username":"tester01","token":"eb2a3870e01677ca26d7cad8218523df"}
+
+{
+  "id": 3,
+  "created": "2024-10-08T12:00:00.000Z",
+  "category": "suite",
+  "floor": 2,
+  "number": 202,
+  "available": true,
+  "price": 2500,
+  "features": [
+    "balcony",
+    "ensuite",
+    "jacuzzi"
+  ]
+}
+
