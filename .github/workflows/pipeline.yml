@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install node packages
-        run: npm install
+        run: npm ci
 
-      - name: Install playwright
+      - name: Install dependencies
         run: npx playwright install
       
       - name: Pull Docker image
