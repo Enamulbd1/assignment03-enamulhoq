@@ -41,5 +41,4 @@ jobs:
         with:
           name: playwright-test-results
           path: ./playwright-report
-          if-no-files-with: warn
-          include-hidden-files: false
+          
