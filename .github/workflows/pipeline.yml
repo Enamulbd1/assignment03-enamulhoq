@@ -1,0 +1,50 @@
+name: Pipeline
+on:
+  push:
+    branches:
+      - main
+      - gh-actions
+
+  pull_request:
+    branches:
+      - main
+    
+
+jobs:
+  run-automated-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code / Fetch code
+        uses: actions/checkout@v4
+
+      - name: Install node packages
+        run: npm ci
+
+      - name: Install dependencies
+        run: npx playwright install
+      
+      - name: Pull Docker image
+        run: docker pull rasilva1986/my-vue-app:v1
+      
+      - name: Start application
+        run: docker run -d -p 3000:3000 rasilva1986/my-vue-app:v1
+
+      - name: Wait until the application is up
+        run: npx wait-on http://localhost:3000
+
+      - name: Run tests
+        env:
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+        
+        run: npm run run-tests
+      
+        
+      - name: Save test results as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: ./playwright-report
+          
